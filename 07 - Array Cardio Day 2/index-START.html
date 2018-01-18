@@ -54,12 +54,26 @@
     // find the comment with the ID of 823423
 
     const findOneAdult = comments.find(function(singlePerson) {
-      const 
+      if (comments.id === 823423 ){
+        return true;
+      }
     });
+
+    // const findOneAdult = comments.find(singlePerson => comments.id === 823423);
+
+    console.log(findOneAdult);
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
+
+    const index = comments.findIndex(singlePerson => comments.id === 823423);
+    console.log(index);
+
+    const newComments = [
+      ...comments.slice(0, index),
+      ...comments.slice(index + 1)
+    ];
 
   </script>
 </body>
