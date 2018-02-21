@@ -7,6 +7,77 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.querySelector('#draw');
+
+  //a begin path where we can draw things. draw on something that is a context in 2d
+  const ctx = canvas.getContext('2d');
+
+  // resize canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx.strokeStyle = '#BADASS';
+
+  //when the line ends should it be round or square
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  //width of the line
+  ctx.lineWidth = 50;
+
+//blend modes
+  // ctx.globalCompositeOperation = 'multiply';
+
+  let isDrawing = false;
+  //a line need a x & y to start and stop the line
+  let lastX = 0;
+  let lastY = 0;
+
+  let hue = 0;
+  let direction = true;
+
+  function draw(e) {
+    if(!isDrawing) return; //stop the function form running when they are not moused down.
+    console.log(e);
+
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+    ctx.beginPath();
+    //start up our line from
+    ctx.moveTo(lastX, lastY);
+    //go to
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+
+    //ES6 [lastX, lastY] = [e.offsetX, e.offsetY]
+    // first time we draw it will be hue-1, 2nd time will be hue=2
+    hue++;
+
+    if(hue >= 360) {
+      hue = 0;
+    }
+
+    if(ctx.lineWidth >= 50 || ctx.lineWidth <= 1) {
+      //if greater that 50 flip the direction and if it's less than one flip the direction
+      direction = !direction;
+    }
+
+    if(direction) {
+      ctx.lineWidth++;
+    } else {
+      ctx.lineWidth--;
+    }
+
+  }
+
+//listen on the mouse is moving on the canvas
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+  });
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
 </script>
 
 <style>
