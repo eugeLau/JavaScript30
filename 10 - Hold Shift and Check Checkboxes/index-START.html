@@ -99,6 +99,39 @@
   </div>
 
 <script>
+  //listen to when they get checked 
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+  // console.log(checkboxes);
+
+  let lastChecked; 
+
+  function handleCheck(e) {
+    //Check if they had the shift key down
+    //and check that they are checking it not unchecking it
+    let inBetween = false;
+    if(e.shiftKey && this.checked) {
+      //then go ahead and do what we please
+      //loop over every single checkbox
+      checkboxes.forEach(checkbox => {
+        console.log(checkbox);
+        if(checkbox === this || checkbox === lastChecked) {
+          //inbetween is opposite of itself as we want it to be going in oposite direction
+          //this is the first checked box
+          inBetween = !inBetween;
+          console.log('Starting to check them inbetween!');
+        }
+
+        if(inBetween){
+          checkbox.checked = true;
+        }
+      });
+    }
+    // console.log(e);
+    lastChecked = this;
+  }
+
+  //take each checkbox and loop over it and add event listener for a click
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
 </script>
 </body>
 </html>
