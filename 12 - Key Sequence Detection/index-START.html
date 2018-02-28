@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+  const pressed =[]
+  const secretCode = 'wesbos';
+
+  window.addEventListener('keyup', (e) => {
+    console.log(e.key);
+
+    pressed.push(e.key);
+    //take away the extra letters starting from the end of the array and only have 6 letters in total of the array
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+    //Join the array into a string and check if it contains the secret code
+    if(pressed.join('').includes(secretCode)){
+      console.log('DING DING!')
+      //this will add unicorn
+      cornify_add();
+    }
+    console.log(pressed);
+  })
 </script>
 </body>
 </html>
